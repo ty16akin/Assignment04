@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:jsf="http://xmlns.jcp.org/jsf"
+  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+  xmlns:h="http://xmlns.jcp.org/jsf/html"
+  xmlns:f="http://xmlns.jcp.org/jsf/core"
+  xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+  >
+  <!-- view that lists regional inventory levels -->
+
+  <f:metadata>
+    <!-- use our knowlege of JSF phases to ask Controller to load/refresh its model list -->
+    <f:viewAction action="#{inventoryController.loadInventory()}" phase="UPDATE_MODEL_VALUES" /> 
+  </f:metadata>
+
+  <h:head>
+    <!-- title of tab/window in browser -->
+    <title>#{uiconsts['viewTitle']}</title>
+    <!-- JSF can use (almost all) modern Frontend artifacts such as: CSS, Javascript, etc. -->
+
+    <!-- misc table styles -->
+    <style>
+        table {
+          border: solid 1px #DDEEEE;
+          border-collapse: collapse;
+          border-spacing: 0;
+          table-layout: auto;
+          width: 95%;
+        }
+        table td {
+          border: solid 1px #DDEEEE;
+        }
+        table th {
+          border: solid 1px black;
+          background-color: #d8d8d8;
+        }
+        table tr:nth-child(even) {
+          background: #f2f2f2;
+        }
+        .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+          background-color: #f0f0e0;
+        }
+        caption {
+          white-space: nowrap;
+          caption-side: bottom;
+        }
+    </style>
+  </h:head>
+  <h:body>
+    <h2>#{uiconsts['viewTitle']}</h2>
+    
+    <h:form>
+      <h:selectOneMenu value="#{inventoryController.region}" onchange="submit()"
+        valueChangeListener="#{inventoryController.valueChangeMethod}">
+        <f:selectItems value="#{inventoryController.regions}" />
+      </h:selectOneMenu>
+    </h:form>
+    
+    <br />
+    <br />
+    
+    <h:form>
+      <!-- Javascript onclick-handler cannot use 'map-style' uiconsts['something'], use 'properties-style'  -->
+      <h:commandButton value="#{uiconsts['addButtonLabel']}" action = "#{inventoryController.goToAddInventory()}" />
+      <h:dataTable value="#{inventoryController.inventory}" var="inv"
+        styleClass="table-hover">
+        <h:column>
+            <f:facet name="header">#{uiconsts['columnLabel_Id']}</f:facet>
+            <h:outputText value="#{inv.id}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">#{uiconsts['columnLabel_Region']}</f:facet>
+            <h:outputText value="#{inv.region}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">#{uiconsts['columnLabel_RetailerName']}</f:facet>
+            <h:outputText value="#{inv.retailerName}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">#{uiconsts['columnLabel_InventoryLevel']}</f:facet>
+            <h:outputText value="#{inv.inventoryLevel}"/>
+        </h:column>
+        <!-- Action column -->
+        <h:column>
+          <f:facet name="header">#{uiconsts['columnLabel_Action']}</f:facet>
+          <h:commandButton value="#{uiconsts['editButtonLabel']}" action = "#{inventoryController.goToEditInventory(inv.id)}" />
+          <h:commandButton value="#{uiconsts['deleteButtonLabel']}"
+            onclick="if (!confirm('#{uiconsts.rus}')) return false"
+            action="#{inventoryController.deleteInventory(inv.id)}"/>
+        </h:column>
+        <f:facet name="caption">#{uiconsts['listCaption']}</f:facet>
+      </h:dataTable>
+    </h:form>
+  </h:body>
+</html>

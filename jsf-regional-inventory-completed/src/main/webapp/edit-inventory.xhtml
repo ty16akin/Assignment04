@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:jsf="http://xmlns.jcp.org/jsf"
+  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+  xmlns:h="http://xmlns.jcp.org/jsf/html"
+  xmlns:f="http://xmlns.jcp.org/jsf/core"
+  xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+  >
+  <!-- View that adds new student -->
+
+  <h:head>
+    <!-- Title of tab/window in browser -->
+    <title>#{uiconsts['editRetailer']}</title>
+  </h:head>
+  <h:body>
+    <h2>#{uiconsts['editRetailer']}</h2>
+    <br/>
+    
+    <h:form>
+
+	    <h:outputText value="#{uiconsts['columnLabel_Region']}" />
+	    <h:inputText value="#{existingInventory.region}"/>
+	
+		<br />
+	    
+	    <h:outputText value="#{uiconsts['columnLabel_Id']}" />
+	    <h:inputText value="#{existingInventory.id}" readonly="true" />
+	
+		<br />
+		
+	    <h:outputText value="#{uiconsts['columnLabel_RetailerName']}" />
+	    <h:inputText value="#{existingInventory.retailerName}"/>
+	    
+	    <br />
+	    
+	    <h:outputText value="#{uiconsts['columnLabel_InventoryLevel']}" />
+	    <h:inputText value="#{existingInventory.inventoryLevel}"/>
+	    
+	    <br />
+	    
+	    <h:commandButton value="#{uiconsts['editButtonLabel']}"
+	    	action="#{inventoryController.submitExistingInventory(existingInventory)}" />
+	    <h:outputLink value="index.xhtml">Back</h:outputLink>
+    
+    </h:form>
+    
+  </h:body>
+</html>

@@ -19,9 +19,12 @@ import java.util.Objects;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -52,10 +55,13 @@ public class CourseRegistration extends PojoBaseCompositeKey<CourseRegistrationP
 	@JoinColumn(name = "student_id", referencedColumnName = "id", nullable = false)
 	private Student student;
 
-	//TODO CR01 - Add missing annotations.  Similar to student, this field is a part of the composite key of this entity.  Changes to this class should cascade.  Reference to a course is not optional.
+	@MapsId("courseId")
+	@ManyToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "course_id", referencedColumnName = "course_id", nullable = false)
 	private Course course;
 
-	//TODO CR02 - Add missing annotations.  Changes to this class should cascade.
+	@ManyToOne(cascade = CascadeType.ALL, optional = true, fetch = FetchType.LAZY)
+	@JoinColumn(name = "professor_id", referencedColumnName = "professor_id", nullable = true)
 	private Professor professor;
 
 	@Column(name = "numeric_grade")

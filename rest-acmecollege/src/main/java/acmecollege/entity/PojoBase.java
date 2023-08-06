@@ -20,25 +20,42 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Version;
+
+@SuppressWarnings("unused")
+
 /**
  * Abstract class that is base of (class) hierarchy for all @Entity classes
  */
-//TODO PB01 - Add annotation to define this class as superclass of all entities.  Please see Week 9 lecture slides.
-//TODO PB02 - Add annotation to place all JPA annotations on fields.
-//TODO PB03 - Add annotation for listener class.
+@MappedSuperclass
+@Access(AccessType.FIELD) // NOTE:  By using this annotations, any annotation on a properties is ignored without warning
+@EntityListeners(PojoListener.class)
 public abstract class PojoBase implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	// TODO PB04 - Add missing annotations.
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(nullable = false, name = "id")
 	protected int id;
 
-	// TODO PB05 - Add missing annotations.
+    @Version
 	protected int version;
 
-	// TODO PB06 - Add missing annotations (hint, is this column on DB?).
+    @Basic(optional = false)
+    @Column(name = "created")
 	protected LocalDateTime created;
 
-	// TODO PB07 - Add missing annotations (hint, is this column on DB?).
+    @Basic(optional = false)
+    @Column(name = "updated")
 	protected LocalDateTime updated;
 
 	public int getId() {

@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 import javax.persistence.Id;
+import javax.persistence.Version;
 
 /**
  * Abstract class that is base of (class) hierarchy for all @Entity classes
@@ -36,6 +37,7 @@ public abstract class PojoBase implements Serializable {
 	protected int id;
 
 	// TODO PB05 - Add missing annotations.
+	@Version
 	protected int version;
 
 	// TODO PB06 - Add missing annotations (hint, is this column on DB?).

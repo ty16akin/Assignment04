@@ -20,6 +20,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import javax.persistence.Id;
+
 /**
  * Abstract class that is base of (class) hierarchy for all @Entity classes
  */
@@ -30,6 +32,7 @@ public abstract class PojoBase implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	// TODO PB04 - Add missing annotations.
+	@Id
 	protected int id;
 
 	// TODO PB05 - Add missing annotations.

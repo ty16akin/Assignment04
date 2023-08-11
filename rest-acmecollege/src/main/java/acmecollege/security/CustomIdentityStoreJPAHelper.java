@@ -13,6 +13,7 @@
  */
 package acmecollege.security;
 
+import static acmecollege.entity.SecurityUser.SECURITY_USER_BY_NAME_QUERY;
 import static acmecollege.utility.MyConstants.PARAM1;
 import static acmecollege.utility.MyConstants.PU_NAME;
 
@@ -56,6 +57,14 @@ public class CustomIdentityStoreJPAHelper {
          *         requests will fail, none of the REST'ful endpoints will work.
          *  
          */
+        
+        TypedQuery<SecurityUser> query = em.createNamedQuery(SECURITY_USER_BY_NAME_QUERY, SecurityUser.class);
+        query.setParameter(PARAM1, username);
+        try {
+        	user = query.getSingleResult();
+        } catch(NoResultException e) {
+        	LOG.debug(e);
+        }
         return user;
     }
 

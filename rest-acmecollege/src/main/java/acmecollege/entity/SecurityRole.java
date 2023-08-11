@@ -19,16 +19,31 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
 @SuppressWarnings("unused")
 
 /**
  * Role class used for (JSR-375) Java EE Security authorization/authentication
  */
 //TODO SR01 - Make this into JPA entity and add all necessary annotations
+@Entity
+@Table(name = "security_role")
+@NamedQuery(name = SecurityRole.FIND_USER_ROLE, query = "SELECT sr FROM SecurityRole sr where sr.roleName = :param1")
+@NamedQuery(name = SecurityRole.FIND_STUDENT_WITH_ROLE, query = "SELECT u FROM SecurityUser u left JOIN FETCH u.student left JOIN FETCH u.roles WHERE u.student.id = :param1")
 public class SecurityRole implements Serializable {
     /** Explicit set serialVersionUID */
     private static final long serialVersionUID = 1L;
-
+    
+    public static final String FIND_USER_ROLE = "SecurityRole.findAll";
+    public static final String FIND_STUDENT_WITH_ROLE = "SecurityUser.find";
+    
+    @Id
+    @Column(name = "role_id")
     protected int id;
     
     protected String roleName;

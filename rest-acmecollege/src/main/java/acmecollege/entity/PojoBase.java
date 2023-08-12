@@ -7,11 +7,10 @@
  * @author Mike Norman
  * @date 2020 04
  * 
- * Updated by:  Group NN
- *   studentId, firstName, lastName (as from ACSIS)
- *   studentId, firstName, lastName (as from ACSIS)
- *   studentId, firstName, lastName (as from ACSIS)
- *   studentId, firstName, lastName (as from ACSIS)
+ * Updated by:  Group 11
+ *   041004792, Mohammed, Alshaikhahmad (as from ACSIS)
+ *   041043679, Ryan, Wang (as from ACSIS)
+ *   040982118, Taiwo, Akinlabi (as from ACSIS)
  *   
  */
 package acmecollege.entity;

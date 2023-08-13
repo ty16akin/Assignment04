@@ -36,11 +36,13 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "course")
 @NamedQuery(name = Course.ALL_COURSES_QUERY, query = "SELECT c FROM Course c")
+@NamedQuery(name = Course.COURSE_BY_ID,query = "SELECT c FROM Course c where c.id = :param1")
 @AttributeOverride(name = "id", column = @Column(name = "course_id"))
 public class Course extends PojoBase implements Serializable {
 	private static final long serialVersionUID = 1L;
 
     public static final String ALL_COURSES_QUERY = "Course.findAll";
+    public static final String COURSE_BY_ID="Course.findOne";
 
 	@Basic(optional = false)
 	@Column(name = "course_code", nullable = false, length = 7)

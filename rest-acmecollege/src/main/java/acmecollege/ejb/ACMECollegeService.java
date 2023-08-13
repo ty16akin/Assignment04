@@ -56,6 +56,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import acmecollege.entity.ClubMembership;
+import acmecollege.entity.Course;
 import acmecollege.entity.CourseRegistration;
 import acmecollege.entity.MembershipCard;
 import acmecollege.entity.Professor;
@@ -279,6 +280,133 @@ public class ACMECollegeService implements Serializable {
             em.flush();
         }
         return clubMembershipToBeUpdated;
+    }
+    
+    //FOR COURSE----------------------------------------------------------------------------------------------------------------------
+
+    @Transactional
+    public void deleteCourseById(int courseId) {
+        Course course = getById(Course.class, Course.COURSE_BY_ID, courseId);
+        if (course != null) {
+            em.remove(course);
+        }
+    }
+
+    @Transactional
+    public Course persistCourse(Course newCourse) {
+        em.persist(newCourse);
+        return newCourse;
+    }
+
+    public List<Course> getAllCourses() {
+        TypedQuery<Course> allCoursesQuery = em.createNamedQuery(Course.ALL_COURSES_QUERY, Course.class);
+        return allCoursesQuery.getResultList();
+    }
+
+    public Course getCourseById(int courseId) {
+        TypedQuery<Course> courseByIdQuery = em.createNamedQuery(Course.COURSE_BY_ID, Course.class);
+        courseByIdQuery.setParameter("param1", courseId);
+        List<Course> courses = courseByIdQuery.getResultList();
+        return courses.isEmpty() ? null : courses.get(0);
+    }
+
+
+    //FOR MEMBERSHIP CARD
+    @Transactional
+    public void deleteCardById(int cardId) {
+        MembershipCard card = getById(MembershipCard.class, MembershipCard.ID_CARD_QUERY_NAME, cardId);
+        if (card != null) {
+            em.remove(card);
+        }
+
+    }
+
+    @Transactional
+    public MembershipCard persistCard(MembershipCard newCard) {
+        em.persist(newCard);
+        return newCard;
+    }
+
+    public List<MembershipCard> getAllCards() {
+        TypedQuery<MembershipCard> allCardsQuery = em.createNamedQuery(MembershipCard.ALL_CARDS_QUERY_NAME, MembershipCard.class);
+        return allCardsQuery.getResultList();
+    }
+
+    public MembershipCard getCardById(int membershipId){
+        TypedQuery<MembershipCard> idQuery = em.createNamedQuery(MembershipCard.ID_CARD_QUERY_NAME , MembershipCard.class);
+        idQuery.setParameter(PARAM1,membershipId);
+        MembershipCard cardById = idQuery.getSingleResult();
+        return cardById;
+
+    }
+
+    //For Course Registration Resource
+    public List<CourseRegistration> getAllRegistration() {
+        TypedQuery<CourseRegistration> allCardsQuery = em.createNamedQuery("CourseRegistration.findAll", CourseRegistration.class);
+        return allCardsQuery.getResultList();
+    }
+
+    @Transactional
+    public CourseRegistration persistCourseRegistration(CourseRegistration newCourseRegistration) {
+        em.persist(newCourseRegistration);
+        return newCourseRegistration;
+    }
+
+    public CourseRegistration getCourseRegistrationById(int studentId, int courseId) {
+        TypedQuery<CourseRegistration> allQuery = em.createNamedQuery("CourseRegistration.findById", CourseRegistration.class);
+        allQuery.setParameter(PARAM1, studentId);
+        allQuery.setParameter("param2", courseId);
+        return allQuery.getSingleResult();
+    }
+
+    @Transactional
+    public void deleteCourseRegistrationById(int studentId, int courseId) {
+
+        CourseRegistration resultCourseRegistration = getCourseRegistrationById(studentId, courseId);
+        if (resultCourseRegistration != null) {
+            em.remove(resultCourseRegistration);
+        }
+    }
+
+    //For Club Membership Resource
+    public List<ClubMembership> getAllClubMembership() {
+        TypedQuery<ClubMembership> allCardsQuery = em.createNamedQuery(ClubMembership.FIND_BY_ID, ClubMembership.class);
+        return allCardsQuery.getResultList();
+    }
+
+    @Transactional
+    public void deleteClubMembershipById(int id) {
+
+        ClubMembership newClubMembership = getById(ClubMembership.class, ClubMembership.FIND_BY_ID, id);
+        if (newClubMembership != null) {
+            em.remove(newClubMembership);
+        }
+    }
+
+    //FOR PROFESSOR RESOURCE
+    @Transactional
+    public void deleteProfessorById(int professorId) {
+        Professor professor = getById(Professor.class, Professor.PROFESSOR_BY_ID, professorId);
+        if (professor != null) {
+            em.remove(professor);
+        }
+    }
+
+    @Transactional
+    public void persistProfessor(Professor newProfessor) {
+        em.persist(newProfessor);
+    }
+
+    public List<Professor> getAllProfessors() {
+        TypedQuery<Professor> allProfessorsQuery = em.createNamedQuery(Professor.ALL_PROFESSORS_QUERY, Professor.class);
+        return allProfessorsQuery.getResultList();
+    }
+
+    public Professor getProfessorById(int professorId) {
+        TypedQuery<Professor> professorByIdQuery = em.createNamedQuery(Professor.PROFESSOR_BY_ID, Professor.class);
+        professorByIdQuery.setParameter("param1", professorId);
+        List<Professor> professors = professorByIdQuery.getResultList();
+        return professors.isEmpty() ? null : professors.get(0);
     }
     
 }

@@ -26,6 +26,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -46,17 +47,19 @@ import javax.persistence.Transient;
 //Hint - @NamedQuery uses the name which is defined in @Entity for JPQL, if no name is defined use class name.
 //Hint - @NamedNativeQuery can optionally be used if there is a need for SQL query.
 @NamedQuery(name = "Professor.findAll", query = "SELECT p FROM Professor p left join fetch p.courseRegistrations")
-@NamedQuery(name = Professor.IS_DUPLICATE_QUERY_NAME, query = "SELECT count(p) FROM Professor p where p.firstName = :param1 and p.lastName = :param2 and p.department = :param3")
-@NamedQuery(name = Professor.QUERY_PROFESSOR_BY_NAME_DEPARTMENT, query = "SELECT p FROM Professor p where p.firstName = :param1 and p.lastName = :param2 and p.department = :param3")
 //Hint - @AttributeOverride can override column details.  This entity uses professor_id as its primary key name, it needs to override the name in the mapped super class.
 @AttributeOverride(name = "id", column = @Column(name = "professor_id"))
 //Hint - PojoBase is inherited by any entity with integer as their primary key.
 //Hint - PojoBaseCompositeKey is inherited by any entity with a composite key as their primary key.
+@NamedQueries({
+	@NamedQuery(name = Professor.ALL_PROFESSORS_QUERY, query = "SELECT p FROM Professor p"),
+	@NamedQuery(name = Professor.PROFESSOR_BY_ID, query = "SELECT p FROM Professor p WHERE p.id = :param1")
+})
 public class Professor extends PojoBase implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-    public static final String IS_DUPLICATE_QUERY_NAME = "Professor.isDuplicate";
-    public static final String QUERY_PROFESSOR_BY_NAME_DEPARTMENT = "Professor.findByNameDepartment";
+	public static final String ALL_PROFESSORS_QUERY = "Professor.getAllProfessors";
+	public static final String PROFESSOR_BY_ID = "Professor.getProfessorById";
 
 	// Hint - @Basic(optional = false) is used when the object cannot be null.
 	// Hint - @Basic or none can be used if the object can be null.

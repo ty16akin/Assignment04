@@ -1,11 +1,8 @@
 /**
- * File:  TestACMECollegeSystem.java
- * Course materials (23S) CST 8277
- * Teddy Yap
- * (Original Author) Mike Norman
- *
- * @date 2020 10
- * (Modified) @author Ryan Wang
+ * File:  TestStudentEntity.java
+ * CST8277 Group Assignment
+ * @date 2023 08
+ * @author Ryan Wang
  * 
  * Group 11
  * Ryan Wang 041043679
@@ -26,6 +23,7 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.collection.IsEmptyCollection.empty;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.lang.invoke.MethodHandles;
 import java.net.URI;
@@ -33,6 +31,7 @@ import java.util.List;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
@@ -46,6 +45,7 @@ import org.glassfish.jersey.logging.LoggingFeature;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
@@ -57,7 +57,7 @@ import acmecollege.entity.Student;
 @SuppressWarnings("unused")
 
 @TestMethodOrder(MethodOrderer.MethodName.class)
-public class TestACMECollegeSystem {
+public class TestStudentClubEntity {
     private static final Class<?> _thisClaz = MethodHandles.lookup().lookupClass();
     private static final Logger logger = LogManager.getLogger(_thisClaz);
 
@@ -91,17 +91,4 @@ public class TestACMECollegeSystem {
         webTarget = client.target(uri);
     }
 
-    @Test
-    public void test01_all_students_with_adminrole() throws JsonMappingException, JsonProcessingException {
-        Response response = webTarget
-            //.register(userAuth)
-            .register(adminAuth)
-            .path(STUDENT_RESOURCE_NAME)
-            .request()
-            .get();
-        assertThat(response.getStatus(), is(200));
-        List<Student> students = response.readEntity(new GenericType<List<Student>>(){});
-        assertThat(students, is(not(empty())));
-        assertThat(students, hasSize(1));
-    }
 }

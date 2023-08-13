@@ -1,15 +1,14 @@
-/***************************************************************************
- * File:  Professor.java Course materials (23S) CST 8277
- * 
+/**
+ * File:  SecurityUser.java Course materials (23S) CST 8277
+ *
  * @author Teddy Yap
  * @author Shariar (Shawn) Emami
- * @date August 28, 2022
+ * @author (original) Mike Norman
  * 
  * Updated by:  Group NN
- *   studentId, firstName, lastName (as from ACSIS)
- *   studentId, firstName, lastName (as from ACSIS)
- *   studentId, firstName, lastName (as from ACSIS)
- *   studentId, firstName, lastName (as from ACSIS)
+ *   040982118, Taiwo, Akinlabi (as from ACSIS)
+ *   041043679, Ryan, WAng (as from ACSIS)
+ *   041004792, Mohammad,  Alshaikhahmad (as from ACSIS)
  * 
  */
 package acmecollege.entity;

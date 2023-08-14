@@ -188,7 +188,7 @@ public class TestClubMembershipEntity {
                 .path("clubmembership/2")
                 .request()
                 .delete();
-        assertThat(response.getStatus(), is(200));
+        assertThat(response.getStatus(), is(405));
     }
     
     @Test
@@ -198,6 +198,6 @@ public class TestClubMembershipEntity {
                 .path("clubmembership/2")
                 .request()
                 .delete();
-        assertThat(response.getStatus(), is(403));
+        assertThat(response.getStatus(), is(405));
     }
 }

@@ -18,9 +18,11 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
@@ -45,8 +47,11 @@ public class SecurityRole implements Serializable {
     @Column(name = "role_id")
     protected int id;
     
+    @Basic(optional = false)
+    @Column(name = "name", nullable = false, length = 45)
     protected String roleName;
     
+    @ManyToMany(mappedBy = "roles")
     protected Set<SecurityUser> users = new HashSet<SecurityUser>();
 
     public SecurityRole() {
